@@ -1,5 +1,5 @@
 <?php 
-include "navbar.php";
+
 if(isset($_POST['seccio'])){
 //echo $_REQUEST['login'];
 switch ($_POST['seccio']) {

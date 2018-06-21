@@ -8,6 +8,9 @@
   <title>Document</title>
 </head>
 <body>
+	<div id=header>
+		<?php include "vistas/navbar.php"; ?>
+	</div>
   <div id="body">
     <?php include "vistas/main.php";?>
   </div>
