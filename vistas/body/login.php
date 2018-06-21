@@ -9,7 +9,7 @@
     <input id="psw" type="password" placeholder="Contraseña" name="psw" >
     <br><br>
     <!-- <div class="botones"> -->
-    <button type="button" id="login" >Login</button>
+    <button type="submit" id="login">Login</button>
     <!-- </div> -->
   </div>
 </form>
