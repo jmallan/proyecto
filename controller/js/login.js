@@ -30,3 +30,6 @@ function loginUser(){
   });
 / Funcion que logueara al usuario /
 }
+$.each(collection, function (indexInArray, valueOfElement) { 
+   
+});
