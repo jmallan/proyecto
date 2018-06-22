@@ -9,19 +9,26 @@ switch ($_POST['seccio']) {
   case 'ventas':
     // include "body/ventas.php";
     break;
-  case 'provedores':
-    // include "body/provedores.php";
+  case 'proyectos':
+    // include "body/proyectos.php";
     break;
-  case 'login':
-    include "body/login.php";
+  case 'compras':
+    //include "body/compras.php";
+    break;
+  case 'clientes':
+    //include "body/clientes.php";
+    break;
+  case 'ctrl-usuarios':
+    //include "body/users.php";
+    break;
+  case 'forms':
+    //include "body/forms.php";
     break;
   default:
-   
-    // include "body/home.php";
+    include "body/home.php";
     break;
 }
 }
-else include ("body/home.php");
+else include ("body/login.php");
 
-include "footer.php";
 ?>
