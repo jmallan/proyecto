@@ -123,7 +123,7 @@
                     WHERE   User  = '$usuario'    AND
                             Password     = '$pass0'
                 ";
-                echo $sql;
+                // echo $sql;
 
         // Generamos objeto sql
         $consulta = mysqli_query($conexion, $sql)
