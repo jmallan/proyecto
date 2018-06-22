@@ -1,14 +1,11 @@
 $(document).ready(function () {
-// Recoger todos los botones de pÃƒÂ¡gina principal index
-
 $('#login').on("click",loginUser);
-
 });
 
 function loginUser(){
   var user = $("#username").val();
   var pass = $("#pass").val();
-  $("#login").submit(function (e) { 
+  $("#formularioLogin").submit(function (e) { 
     e.preventDefault();
     $.ajax({
       type: "post",

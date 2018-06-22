@@ -3,13 +3,13 @@
 <form action="" method="post" id="formularioLogin">
   <div class="container">
     <label for="username"><b>Username : </b></label>
-    <input type="text" id="username" placeholder="Nombre usuario" name="username" required>
+    <input type="text" id="username" placeholder="Nombre usuario" name="username">
     <br><br>
     <label for="psw"><b>Password : </b></label>
-    <input id="psw" type="password" placeholder="Contraseña" name="psw" required>
+    <input id="psw" type="password" placeholder="Contraseña" name="psw">
     <br><br>
     <!-- <div class="botones"> -->
-    <button type="button" id="login" >Login</button>
+    <input type="submit" id="login" value="Enviar">
     <!-- </div> -->
   </div>
 </form>
