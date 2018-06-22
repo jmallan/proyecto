@@ -12,10 +12,7 @@
 </head>
 <body>
 	<div id=header>
-		<div class="jumbotron">
-  			<h1 class="display-4">Hello, world!</h1>
-  			<p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-		</div>
+	<?php include "vistas/jumbotron.php";?>
 	</div>
 	<div class="row">
 		<div class="col-md-4" id="navVertical">
@@ -27,7 +24,7 @@
 		</div>
 	</div>
 	<div id="footer">
-		<!--<?php include "footer.php";?>-->
+		<!--<?php include "vistas/footer.php";?>-->
 	</div>
 
 </body>
