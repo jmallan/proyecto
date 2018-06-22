@@ -14,8 +14,13 @@ function loginUser(){
       data: {"user": user, "pass": pass},
       dataType: "json",
       success: function (response) {
-        
-        console.log(response.data);
+        if (response.status == "success") {
+          
+        }if (response.error) {
+          
+        } else {
+          
+        }
       }
     });
   });

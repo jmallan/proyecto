@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div id=header>
-	<?php include "vistas/jumbotron.php";?>
+	<?php include "vistas/header.php";?>
 	</div>
 	<div class="row">
 		<div class="col-md-4" id="navVertical">
