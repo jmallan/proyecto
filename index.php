@@ -11,6 +11,7 @@
   <title>Document</title>
 </head>
 <body>
+	<?php if(isset($_SESSION['user'])){?>
 	<div id=header>
 	<?php include "vistas/header.php";?>
 	</div>
@@ -29,6 +30,8 @@
 
 		</div>
 	</div>
+<?php }else include("vistas/body/login.php");
+?>
 	<div id="footer">
 		<a href="vistas/main.php?logout">logout</a>
 		<!--<?php include "vistas/footer.php";?>-->

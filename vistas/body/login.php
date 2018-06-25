@@ -1,18 +1,23 @@
-
-<h2>Login de Usuario</h2>
-<form action="" method="post" id="formularioLogin">
-  <div class="container">
-    <label for="username"><b>Username : </b></label>
-    <input type="text" id="username" placeholder="Nombre usuario" name="username">
-    <br><br>
-    <label for="psw"><b>Password : </b></label>
-    <input id="psw" type="password" placeholder="Contraseña" name="psw">
-    <br><br>
-    <!-- <div class="botones"> -->
-    <input type="submit" id="login" value="Enviar">
-    <!-- </div> -->
-  </div>
-</form>
-<div id="resultado">
-  <!-- Escribir el resultado del login: Correcto - Incorrecto -->
-</div>
+<body>
+  <section>
+    <div id="logo">
+      <img src="img/logos/logosarti.png">
+    </div>
+    <div id="formulario">
+      <div class="container">
+        <form id="formularioLogin" method="post">
+          <div class="form-group">
+            <input type="text" class="form-control" id="username" name="User" placeholder="Introduïu el nom d'usuari">
+          </div>
+          <div class="form-group ">
+            <input type="password" class="form-control" id="psw" name="Password" placeholder="Introduir la contrasenya">
+          </div>
+          <br>
+          <br>
+          <button type="button" id="login" class="btn btn-outline-light btn-block">Connecteu</button>
+        </form>
+        <div id="resultado"></div>
+      </div>
+    </div>
+  </section>
+</body>
