@@ -1,5 +1,9 @@
 <?php 
-
+if(isset($_GET['logout'])){
+  session_start();
+  session_destroy();
+  header("Location: ../index.php");
+}
 if(isset($_POST['seccio'])){
 //echo $_REQUEST['login'];
   switch ($_POST['seccio']) {
@@ -31,7 +35,8 @@ if(isset($_POST['seccio'])){
 }
 elseif(isset($_SESSION['user'])){
   include "body/home.php";
-}else{
+}
+else{
   include ("body/login.php");
 } 
 

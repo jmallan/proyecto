@@ -19,7 +19,7 @@
 		<div class="col-md-4" id="navVertical">
 			
 			<?php if(isset($_SESSION['user'])) {
-				echo $navbar[1];
+				//print_r($_SESSION['user']);
 			}
 				?>
 		</div>
@@ -30,6 +30,7 @@
 		</div>
 	</div>
 	<div id="footer">
+		<a href="vistas/main.php?logout">logout</a>
 		<!--<?php include "vistas/footer.php";?>-->
 	</div>
 

@@ -16,24 +16,65 @@
     //include("cfg.php");
     //initCfg();
 
-    function getlist($seccio, $inici) {
+    function getlist($lista, $inici) {
 
         // Conexion servidor y conexion base de datos
         include ("Config_BD.php");
 
     	// Opcion acceso por switch ****************************
-        switch ($seccio) {
-            case 'List_pv':
-    			    $sql =  "SELECT * 
-        				FROM proveedor
+        switch ($lista) {
+            case 'proveedores': //proveedor y su contacto
+                $sql =  "SELECT * FROM proveedor
+                        INNER JOIN proveedor_contacto
+                        ON Fid_proveedor=Id_proveedor
                         LIMIT $inici, 10";
     			break;
     		
-    	    case 'List_cl':
-    			    $sql =  "SELECT * 
-        				FROM cliente
+    	    case 'clientes':    //cliente y su contacto
+                $sql =  "SELECT * FROM cliente
+                        INNER JOIN cliente_contacto
+                        ON fid_cliente=Id_cc
                         LIMIT $inici, 10";
-    			break;
+                break;
+
+            case 'ventas':  //clieteventa cliente factura y crentelp
+                $sql =  "SELECT * FROM cliente
+                        INNER JOIN cliente_venta
+                        ON Id_cliente=Fid_cliente
+                        INNER JOIN cliente_lineaventa
+                        ON Id_venta=Fid_venta
+                        INNER JOIN cliente_factura
+                        ON Id_lineapedido=Fid_lineaventa
+                        LIMIT $inici, 10";
+            break;
+
+            case 'compras': //proveedor compra factura lp albaran
+                $sql =  "SELECT * FROM proveedor
+                        INNER JOIN proveedor_compra
+                        ON Id_proveedor=Fid_proveedor
+                        INNER JOIN usuario
+                        ON Fid_usuario=Id_usuario
+                        INNER JOIN proveedor_lineapedido
+                        ON Fid_compra=Id_pedido
+                        INNER JOIN proveedor_factura
+                        ON Id_lineapedido=Fid_pedido
+                        INNER JOIN proveedor_albaran
+                        ON Id_factura=Fid_factura
+                        LIMIT $inici, 10";
+            break;
+
+            case 'encuestas':           // 3 tablas de formularios
+                $sql =  "SELECT * FROM formulario
+                        INNER JOIN formulario_preguntas
+                        ON Id_formulario=Fid_formulario
+                        INNER JOIN formulario_respuestas
+                        ON Id_preguntas=Fid_pregunta
+                        LIMIT $inici, 10";
+            break;
+            
+            default:        
+                        echo"Lista solicitado no existe";
+                        return;
     	}
 
         // Generamos objeto sql
@@ -41,22 +82,20 @@
             or die ("Fallo en la consulta".mysqli_error($conexion));
 
         if ($consulta){
-            $error = "Registros leidos correctamente";                      
+            $status = "OK";                      
             $datos = array();
             while($fila = mysqli_fetch_assoc($consulta)){                 
                 $datos [] = $fila;
             }                    
         }else{
-            $error = "Error: " .$sql.  "<br>" . $mysqli->error;
+            $status = "Error: " .$sql.  "<br>" . $mysqli->error;
             $datos = "La query no ha funcionado";
         }
         
         echo json_encode([ // codifica datos para enviar de vuelta con json
-               "status"  => "success",
-               "data"  => $datos,
-               "error"     => $error,
-               "resultado" => "Conexion con la base de datos correcta"
-            ]);
+               "status"  => "$status",
+               "data"  => $datos               
+        ]);
 
         // Cierre base de datos.
         mysqli_close($conexion);
@@ -72,37 +111,38 @@
         // Conexion servidor y conexion base de datos
         include ("Config_BD.php");       
 
-        $sql =  "SELECT Id_usuario, User, seccion FROM navbar 
-                    INNER JOIN roles
+        $sql =  "SELECT Id_usuario, User, seccion FROM usuario_navbar 
+                    INNER JOIN usuario_rol
                     ON Id_navbar = Fid_navbar
                     INNER JOIN usuario
                     on Id_usuario = Fid_usuario
-                    WHERE User = '$User';";
+                    WHERE User = $User;";
 
         // Generamos objeto sql        
         $consulta = mysqli_query($conexion, $sql) or die ("Fallo en la conexion".mysqli_error($conexion));
 
         // Hallamos la longitud del objeto obtenido
         if ($consulta){
-            $error = "Datos leidos correctamente";                      
+            $status = "OK";                      
             $datos = array();
             while($fila = mysqli_fetch_assoc($consulta)){                 
                 $datos [] = $fila;
             }                    
         }else{
-            $error = "Error: " .$sql.  "<br>" . $mysqli->error;
+            $status = "Error: " .$sql.  "<br>" . $mysqli->error;
             $datos = "La query no ha funcionado";
         }
         
-        echo json_encode([ // codifica datos para enviar de vuelta con json
-               "status"  => "success",
-               "data"  => $datos,
-               "error"     => $error,
-               "resultado" => "Conexion con la base de datos correcta"
-            ]);
+       
             
         // Cierre base de datos.
         mysqli_close($conexion);
+
+        return json_encode([ // codifica datos para enviar de vuelta con json
+               "status"  => "$status",
+               "data"  => $datos
+               
+            ]);
     } // FIN funcion
 
 
@@ -132,7 +172,7 @@
         // ********************************
         if ($consulta){          
            
-            $error = "Registros leidos correctamente";                      
+            $status = "OK";                      
             $datos = array();
             $nfilas=mysqli_num_rows($consulta);
             //echo $nfilas;
@@ -142,19 +182,18 @@
            }  
 
         }else{
-            $error = "Error: " .$sql.  "<br>" . $mysqli->error;
+            $status = "Error: " .$sql.  "<br>" . $mysqli->error;
             $datos = "La query no ha funcionado";
         }
-        
-        echo json_encode([ // codifica datos para enviar de vuelta con json
-            "status"  => "success",
-            "data"  => $datos,
-            "error"     => $error,
-            "resultado" => "Conexion con la base de datos correcta"
-            ]);
+
+         mysqli_close($conexion);
+        return json_encode([ // codifica datos para enviar de vuelta con json
+            "status"  => "$status",
+            "data"  => $datos
+        ]);
 
         // Cierre base de datos.
-        mysqli_close($conexion);
+       
     } // FIN funcion
 
 
@@ -175,34 +214,30 @@
 
             foreach ($form_data as $key => $value) {
 
-                $data.= $key."='".$value."', "; 
-                //  $data[] = $key."="."'".$value."'";
+                $data.= $key."='".$value."', ";                
 
-            }
-                   
-        //$sql .= implode(',',$data);
+            }                   
+       
         $sql .= substr("".$data."", 0,-2);
         $sql .=" WHERE ".$field_id." = ".$id."; ";
-        echo $sql;
+        //echo $sql;
         
         
         $consulta = mysqli_query($conexion, $sql) or die ("Fallo en la conexion".mysqli_error($conexion));
 
         if ($consulta){
-            $error = "Registro MODIFICADO correctamente";                      
+            $status = "OK";                      
             $datos = array();
                                 
         }else{
-            $error = "Error: " .$sql.  "<br>" . $mysqli->error;
+            $status = "Error: " .$sql.  "<br>" . $mysqli->error;
             $datos = "La query no ha funcionado";
         }
         
         echo json_encode([ // codifica datos para enviar de vuelta con json
-                "status"  => "success",
-                "data"  => $datos,
-                "error"     => $error,
-                "resultado" => "Conexion con la base de datos correcta"
-            ]);
+                "status"  => "$status",
+                "data"  => $datos
+        ]);
           
       // Cierre base de datos.
       mysqli_close($conexion);
@@ -216,35 +251,33 @@
     //  Return de JSON(menu)
     function delete_reg($tabla, $campo_id, $value_id) {
       
-      // Conexion servidor y conexion base de datos
-      include ("Config_BD.php");        
-      //$conexion=connectBD();
+        // Conexion servidor y conexion base de datos
+        include ("Config_BD.php");        
+        //$conexion=connectBD();
 
-      // Generamos objeto sql
-      $sql = "DELETE FROM $tabla WHERE $campo_id='$value_id'";
-           
-      $consulta = mysqli_query($conexion, $sql) or die ("Fallo en la conexion".mysqli_error($conexion));
+        // Generamos objeto sql
+        $sql = "DELETE FROM $tabla WHERE $campo_id='$value_id'";
+            
+        $consulta = mysqli_query($conexion, $sql) or die ("Fallo en la conexion".mysqli_error($conexion));
 
-      // Hallamos la longitud del objeto obtenido
-      if ($consulta){
-        $error = "El registro esta ELIMINADO correctamente";                      
+        // Hallamos la longitud del objeto obtenido
+        if ($consulta){
+        $status = "OK";                      
         $datos = array();
-                             
-      }else{
-        $error = "Error: " .$sql.  "<br>" . $mysqli->error;
-        $datos = "La query no ha funcionado";
-      }
-      
-      echo json_encode([ // codifica datos para enviar de vuelta con json
-            "status"  => "success",  
-            "data"  => $datos,           
-            "error"     => $error,
-            "resultado" => "Conexion con la base de datos correcta"
-          ]);
-          
-      // Cierre base de datos.
-      mysqli_close($conexion);
-  } // FIN funcion
+                                
+        }else{
+            $status = "Error: " .$sql.  "<br>" . $mysqli->error;
+            $datos = "La query no ha funcionado";
+        }
+        
+        echo json_encode([ // codifica datos para enviar de vuelta con json
+                "status"  => "$status",
+                "data"  => $datos
+            ]);
+            
+        // Cierre base de datos.
+        mysqli_close($conexion);
+    } // FIN funcion
 
 
 
@@ -276,19 +309,17 @@ function crear_reg($tabla, $form_data) {
     $consulta = mysqli_query($conexion, $sql) or die ("Fallo en la conexion".mysqli_error($conexion));
 
     if ($consulta){
-        $error = "Registro CREADO correctamente";                      
+        $status = "OK";                      
         $datos = array();
                             
     }else{
-        $error = "Error: " .$sql.  "<br>" . $mysqli->error;
+        $status = "Error: " .$sql.  "<br>" . $mysqli->error;
         $datos = "La query no ha funcionado";
     }
     
     echo json_encode([ // codifica datos para enviar de vuelta con json
-            "status"  => "success",
-            "data"  => $datos,
-            "error"     => $error,
-            "resultado" => "Conexion con la base de datos correcta"
+            "status"  => "$status",
+            "data"  => $datos
         ]);
       
   // Cierre base de datos.
