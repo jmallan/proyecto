@@ -15,14 +15,10 @@ function loginUser(){
       dataType: "json",
       success: function (response) {
         if (response.status == "success") {
-          
-        }if (response.error) {
-          
-        } else {
-          
-        }
+          location.assign("index.php");          
+        } 
       }
     });
   });
-/ Funcion que logueara al usuario /
+// / Funcion que logueara al usuario /
 }

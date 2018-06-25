@@ -8,7 +8,7 @@ function showNavbar($contenido)
 	$roles = $_SESSION['roles'];
 	$menuLateral .= "<nav class=\"nav flex-column\"> ";
 	foreach ($roles as $campo) {
-			$menuLateral .= "<a class=\"nav-link\" href=\"#\">" . $campo[0] . "</a>";
+			$menuLateral .= "<a id=\"".$campo[0]."\" class=\"nav-link\" href=\"#\">" . $campo[0] . "</a>";
 	}
 	$menuLateral .= "</nav>";
 

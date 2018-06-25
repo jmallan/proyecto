@@ -4,5 +4,7 @@ if (isset($_REQUEST['user'])) {
     $user = $_REQUEST['user'];
     $pass = $_REQUEST['pass'];
 
-    getuser($pass, $user);
+    $_SESSION['user'] = getuser($pass, $user);
+   //  var_dump($_SESSION['user']);
+
 }

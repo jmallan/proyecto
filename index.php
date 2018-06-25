@@ -14,8 +14,14 @@
 	<div id=header>
 	<?php include "vistas/header.php";?>
 	</div>
+
 	<div class="row">
 		<div class="col-md-4" id="navVertical">
+			
+			<?php if(isset($_SESSION['user'])) {
+				echo $navbar[1];
+			}
+				?>
 		</div>
 		<div class="col-md-8" id="body">
 			

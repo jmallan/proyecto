@@ -29,6 +29,10 @@ if(isset($_POST['seccio'])){
       break;
   }
 }
-else include ("body/login.php");
+elseif(isset($_SESSION['user'])){
+  include "body/home.php";
+}else{
+  include ("body/login.php");
+} 
 
 ?>
