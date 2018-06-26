@@ -16,28 +16,22 @@
   		
 		<?php include "vistas/header.php";?>
 	</div>
-	<div class="container">
 		<div class="row">
-
-			
-				<?php include ("vistas/navbar.php");
-				?>
-			<div class="col-md-8" id="body">
-				
-					<?php include "vistas/main.php";?>
-
+			<?php include ("vistas/navbar.php");
+			?>
+			<div id="body">
+				<?php include "vistas/main.php";?>
 			</div>
 		</div>
 	<?php }else {
 		include("vistas/body/login.php");
 	?>
-	</div>
 	<style>
 		@import "vistas/css/login.css";
 	</style>
 	<?php } ?>
 	<div id="footer">
-		<a href="vistas/main.php?logout">logout</a>
+<!-- 		<a href="vistas/main.php?logout">logout</a> -->
 		<!--<?php include "vistas/footer.php";?>-->
 	</div>
 

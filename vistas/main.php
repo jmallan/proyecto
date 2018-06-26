@@ -28,6 +28,11 @@ if(isset($_POST['seccio'])){
     case 'forms':
       //include "body/forms.php";
       break;
+    case 'logout':
+      session_start();
+      session_destroy();
+      header("Location: ../index.php");
+      break;
     default:
       include "body/home.php";
       break;

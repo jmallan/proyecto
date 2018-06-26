@@ -6,7 +6,15 @@ $(document).ready(function () {
       }
     );
 
+
   });
+
+  $("#logout").click(function(){
+    $.post("vistas/main.php", {seccio: "logout"}, function(data,textStatus,jqXHR){
+  
+    });
+  });
+
   $enllaços = $(".nav-link");
   $.each($enllaços, function(index, value){
 

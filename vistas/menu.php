@@ -5,18 +5,18 @@
 		
 		/* Generar menu del usuario dependiendo de los roles que tiene asignados y que se encuentra en la variable $_SESSION['roles'] */
 
-		//$roles = $_SESSION['roles'];
+		$roles = $_SESSION['roles'];
 
 
 		/* Test */
-		$roles = array(
-          array("Home",1),
-          array("Clientes",2),
-          array("Proveedores",2),
-          array("Proyectos",2),
-          array("Encuestas",2),
-          array("Empleados",2)
-  		);
+		// $roles = array(
+  //         array("Home",1),
+  //         array("Clientes",2),
+  //         array("Proveedores",2),
+  //         array("Proyectos",2),
+  //         array("Encuestas",2),
+  //         array("Empleados",2)
+  // 		);
 		
 		$menuLateral .= "<div class=\"container bg-primary w-25 float-left m-0\" style=\"height:100vh\">";  
 		$menuLateral .= "<div class=\"container\">";
