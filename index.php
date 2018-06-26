@@ -12,26 +12,30 @@
 </head>
 <body>
 	<?php if(isset($_SESSION['user'])){?>
-	<div id=header>
-	<?php include "vistas/header.php";?>
+	<div id="header">
+  		
+		<?php include "vistas/header.php";?>
 	</div>
+	<div class="container">
+		<div class="row">
 
-	<div class="row">
-		<div class="col-md-4" id="navVertical">
 			
-			<?php if(isset($_SESSION['user'])) {
-				//print_r($_SESSION['user']);
-			}
+				<?php include ("vistas/navbar.php");
 				?>
-		</div>
-		<div class="col-md-8" id="body">
-			
-				<?php include "vistas/main.php";?>
+			<div class="col-md-8" id="body">
+				
+					<?php include "vistas/main.php";?>
 
+			</div>
 		</div>
+	<?php }else {
+		include("vistas/body/login.php");
+	?>
 	</div>
-<?php }else include("vistas/body/login.php");
-?>
+	<style>
+		@import "vistas/css/login.css";
+	</style>
+	<?php } ?>
 	<div id="footer">
 		<a href="vistas/main.php?logout">logout</a>
 		<!--<?php include "vistas/footer.php";?>-->

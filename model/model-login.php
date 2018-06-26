@@ -5,6 +5,9 @@ if (isset($_REQUEST['user'])) {
     $user = $_REQUEST['user'];
     $pass = $_REQUEST['pass'];
 
-    $_SESSION['user'] = json_decode(getuser($pass, $user));
-   // print_r($_SESSION['user']);
+    $data = json_decode(getuser($pass, $user));
+    if($data->status == "OK"){
+    	$_SESSION['user']= $data;
+
+    }
 }

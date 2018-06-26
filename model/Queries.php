@@ -16,7 +16,49 @@
     //include("cfg.php");
     //initCfg();
 
-    function getlist($lista, $inici) {
+
+// ***************************************************
+//                      LISTA DE UNA SOLA TABLE
+// ***************************************************
+
+function getList($table, $inici) {
+
+    // Conexion servidor y conexion base de datos
+    include ("Config_BD.php");
+    
+    // Generamos objeto sql
+    $sql =  "SELECT * FROM $table
+            LIMIT $inici, 10";    			        
+    
+    $consulta = mysqli_query($conexion, $sql)
+        or die ("Fallo en la consulta".mysqli_error($conexion));
+
+    if ($consulta){
+        $status = "OK";                      
+        $datos = array();
+        while($fila = mysqli_fetch_assoc($consulta)){                 
+            $datos [] = $fila;
+        }                    
+    }else{
+        $status = "Error: " .$sql.  "<br>" . $mysqli->error;
+        $datos = "La query no ha funcionado";
+    }
+    
+    return json_encode([ // codifica datos para enviar de vuelta con json
+           "status"  => "$status",
+           "data"  => $datos               
+    ]);
+
+    // Cierre base de datos.
+    mysqli_close($conexion);
+} // FIN funcion
+
+
+// ***************************************************
+//                      LISTA TABLA COMPLETA (CON INNER JOINTS)
+// ***************************************************
+
+    function getListCompleto($lista, $inici) {
 
         // Conexion servidor y conexion base de datos
         include ("Config_BD.php");
@@ -71,12 +113,24 @@
                         ON Id_preguntas=Fid_pregunta
                         LIMIT $inici, 10";
             break;
-            
+
+            case 'usuarios':           // 3 tablas de formularios
+            $sql =  "SELECT * FROM usuario
+                    INNER JOIN usuario_rol ur
+                    ON Id_usuario=ur.Fid_usuario                    
+                    INNER JOIN usuario_rol_data urd
+                    ON ur.Fid_data_rol=urd.Id_rol                    
+                    INNER JOIN usuario_navbar
+                    ON ur.Fid_navbar=Id_navbar
+                    LIMIT $inici, 10";
+            break;
+
             default:        
                         echo"Lista solicitado no existe";
                         return;
-    	}
 
+        }
+        
         // Generamos objeto sql
         $consulta = mysqli_query($conexion, $sql)
             or die ("Fallo en la consulta".mysqli_error($conexion));
@@ -92,7 +146,7 @@
             $datos = "La query no ha funcionado";
         }
         
-        echo json_encode([ // codifica datos para enviar de vuelta con json
+        return json_encode([ // codifica datos para enviar de vuelta con json
                "status"  => "$status",
                "data"  => $datos               
         ]);
@@ -104,19 +158,168 @@
 
 
 // ***************************************************
+//   MOSTRAR UNA FILA DE UNA SOLA TABLA
+// ***************************************************
+//$table    = nombre de tabla 
+//$campo_Id = nombre de campo/columna en que buscaremos el $id 
+//$id       = id concreto para get fila 
+
+    function getFila($table, $campo_Id, $id) {
+
+        // Conexion servidor y conexion base de datos
+        include ("Config_BD.php");
+        
+        // Generamos objeto sql
+        $sql =  "SELECT * FROM $table
+                WHERE $campo_Id = '$id' "; 			        
+        
+        $consulta = mysqli_query($conexion, $sql)
+            or die ("Fallo en la consulta".mysqli_error($conexion));
+    
+        if ($consulta){
+            $status = "OK";                      
+            $datos = array();
+            while($fila = mysqli_fetch_assoc($consulta)){                 
+                $datos [] = $fila;
+            }                    
+        }else{
+            $status = "Error: " .$sql.  "<br>" . $mysqli->error;
+            $datos = "La query no ha funcionado";
+        }
+        
+        return json_encode([ // codifica datos para enviar de vuelta con json
+               "status"  => "$status",
+               "data"  => $datos               
+        ]);
+    
+        // Cierre base de datos.
+        mysqli_close($conexion);
+    } // FIN funcion
+
+
+// ****************************************************************************************
+//   MOSTRAR FILAS CONCRETAS CON UN ID DENTRO DE UNA CONSULTA COMPLETA (TABLAS CON INNER JOIN)
+// ****************************************************************************************
+
+    function getFilaCompleta($lista, $id) {
+
+        // Conexion servidor y conexion base de datos
+        include ("Config_BD.php");
+
+    	// Opcion acceso por switch ****************************
+        switch ($lista) {
+            case 'proveedores': //proveedor y su contacto
+                $sql =  "SELECT * FROM proveedor
+                        LEFT JOIN proveedor_contacto
+                        ON Fid_proveedor=Id_proveedor
+                        WHERE  Id_proveedor = '$id' ";
+    			break;
+    		
+    	    case 'clientes':    //cliente y su contacto
+                $sql =  "SELECT * FROM cliente
+                        LEFT JOIN cliente_contacto
+                        ON fid_cliente=Id_cc
+                        WHERE  Id_cliente= '$id' ";
+                break;
+
+            case 'ventas':  //clieteventa cliente factura y crentelp
+                $sql =  "SELECT * FROM cliente
+                        INNER JOIN cliente_venta
+                        ON Id_cliente=Fid_cliente
+                        INNER JOIN cliente_lineaventa
+                        ON Id_venta=Fid_venta
+                        INNER JOIN cliente_factura
+                        ON Id_lineapedido=Fid_lineaventa
+                        WHERE  Id_venta= '$id' ";
+            break;
+
+            case 'compras': //proveedor compra factura lp albaran
+                $sql =  "SELECT * FROM proveedor
+                        INNER JOIN proveedor_compra
+                        ON Id_proveedor=Fid_proveedor
+                        INNER JOIN usuario
+                        ON Fid_usuario=Id_usuario
+                        INNER JOIN proveedor_lineapedido
+                        ON Fid_compra=Id_pedido
+                        INNER JOIN proveedor_factura
+                        ON Id_lineapedido=Fid_pedido
+                        INNER JOIN proveedor_albaran
+                        ON Id_factura=Fid_factura
+                        WHERE  Id_compra= '$id' ";
+            break;
+
+            case 'usuarios':  // 3 tablas de formularios
+            $sql =  "SELECT * FROM usuario
+                        INNER JOIN usuario_rol ur
+                        ON Id_usuario=ur.Fid_usuario                    
+                        INNER JOIN usuario_rol_data urd
+                        ON ur.Fid_data_rol=urd.Id_rol                    
+                        INNER JOIN usuario_navbar
+                        ON ur.Fid_navbar=Id_navbar
+                        WHERE  Id_usuario = '$id' ";
+            break;
+
+            case 'encuestas':           // 3 tablas de formularios
+                $sql =  "SELECT * FROM formulario
+                        INNER JOIN formulario_preguntas
+                        ON Id_formulario=Fid_formulario
+                        INNER JOIN formulario_respuestas
+                        ON Id_preguntas=Fid_pregunta
+                        WHERE  Id_formulario = '$id' ";
+            break;
+
+            default:        
+                        echo"Error. Id no existe en la consulta.";
+                        return;
+
+        }
+        
+        // Generamos objeto sql
+        $consulta = mysqli_query($conexion, $sql)
+            or die ("Fallo en la consulta".mysqli_error($conexion));
+
+        if ($consulta){
+            $status = "OK";                      
+            $datos = array();
+            while($fila = mysqli_fetch_assoc($consulta)){                 
+                $datos [] = $fila;
+            }                    
+        }else{
+            $status = "Error: " .$sql.  "<br>" . $mysqli->error;
+            $datos = "La query no ha funcionado";
+        }
+        
+        return json_encode([ // codifica datos para enviar de vuelta con json
+               "status"  => "$status",
+               "data"  => $datos               
+        ]);
+
+        // Cierre base de datos.
+        mysqli_close($conexion);
+    } // FIN funcion
+
+
+
+
+
+
+// ***************************************************
 //             Menus opciones por usuario (NAVBAR)
-// ***************************************************    
-    function getnavbar($User) {
+// *************************************************** 
+
+//$User = es el USERNAME del ususario  
+
+    function getNavbar($User) {
 
         // Conexion servidor y conexion base de datos
         include ("Config_BD.php");       
 
-        $sql =  "SELECT Id_usuario, User, seccion FROM usuario_navbar 
+        $sql =  "SELECT Id_usuario, User, seccion, Fid_data_rol FROM usuario_navbar 
                     INNER JOIN usuario_rol
                     ON Id_navbar = Fid_navbar
                     INNER JOIN usuario
-                    on Id_usuario = Fid_usuario
-                    WHERE User = $User;";
+                    on Id_usuario = Fid_usuario                    
+                    WHERE User = '$User';";
 
         // Generamos objeto sql        
         $consulta = mysqli_query($conexion, $sql) or die ("Fallo en la conexion".mysqli_error($conexion));
@@ -133,16 +336,14 @@
             $datos = "La query no ha funcionado";
         }
         
-       
-            
-        // Cierre base de datos.
-        mysqli_close($conexion);
-
         return json_encode([ // codifica datos para enviar de vuelta con json
                "status"  => "$status",
                "data"  => $datos
                
             ]);
+            
+        // Cierre base de datos.
+        mysqli_close($conexion);
     } // FIN funcion
 
 
@@ -151,7 +352,7 @@
 //                  Control usuario
 // ***************************************************
     //  Return de JSON(succes, data)
-    function getuser($pass, $usuario) {
+    function getUser($pass, $usuario) {
 
         // Conexion servidor y conexion base de datos
         include ("Config_BD.php");        
@@ -170,11 +371,13 @@
         // ********************************
         //  Condicion carga sesion usuario
         // ********************************
-        if ($consulta){          
+        $nfilas=mysqli_num_rows($consulta);
+
+        if ($consulta && $nfilas>0 ){          
            
             $status = "OK";                      
             $datos = array();
-            $nfilas=mysqli_num_rows($consulta);
+            
             //echo $nfilas;
 
             while($fila = mysqli_fetch_assoc($consulta)){                              
@@ -182,18 +385,17 @@
            }  
 
         }else{
-            $status = "Error: " .$sql.  "<br>" . $mysqli->error;
-            $datos = "La query no ha funcionado";
+            $status = "Error";
+            $datos = "La combinacion de este usuario con esta contrasenya no existe.";
         }
-
-         mysqli_close($conexion);
+        
         return json_encode([ // codifica datos para enviar de vuelta con json
             "status"  => "$status",
             "data"  => $datos
         ]);
 
         // Cierre base de datos.
-       
+        mysqli_close($conexion);
     } // FIN funcion
 
 
@@ -201,7 +403,7 @@
 // ***************************************************
 //            MODIFICACIÓN DE REGISTROS
 // ***************************************************    
-    function update_reg($tabla, $form_data, $field_id, $id) { //$form_data es un array associativo
+    function updateRegistro($tabla, $form_data, $field_id, $id) { //$form_data es un array associativo
         // Conexion servidor y conexion base de datos
         include ("Config_BD.php");   
         
@@ -234,7 +436,7 @@
             $datos = "La query no ha funcionado";
         }
         
-        echo json_encode([ // codifica datos para enviar de vuelta con json
+        return json_encode([ // codifica datos para enviar de vuelta con json
                 "status"  => "$status",
                 "data"  => $datos
         ]);
@@ -249,7 +451,7 @@
 //            ELIMINAR REGISTROS
 // ***************************************************
     //  Return de JSON(menu)
-    function delete_reg($tabla, $campo_id, $value_id) {
+    function deleteRegistro($tabla, $campo_id, $value_id) {
       
         // Conexion servidor y conexion base de datos
         include ("Config_BD.php");        
@@ -270,7 +472,7 @@
             $datos = "La query no ha funcionado";
         }
         
-        echo json_encode([ // codifica datos para enviar de vuelta con json
+        return json_encode([ // codifica datos para enviar de vuelta con json
                 "status"  => "$status",
                 "data"  => $datos
             ]);
@@ -285,7 +487,7 @@
 // ***************************************************
 //            NUEVO REGISTRO
 // ***************************************************
-function crear_reg($tabla, $form_data) { 
+function crearRegistro($tabla, $form_data) { // $form_data es un array associativo
     // Conexion servidor y conexion base de datos
     include ("Config_BD.php");
 
@@ -317,7 +519,7 @@ function crear_reg($tabla, $form_data) {
         $datos = "La query no ha funcionado";
     }
     
-    echo json_encode([ // codifica datos para enviar de vuelta con json
+    return json_encode([ // codifica datos para enviar de vuelta con json
             "status"  => "$status",
             "data"  => $datos
         ]);

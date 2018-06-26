@@ -11,9 +11,8 @@ function loginUser(){
       data: {"user": user, "pass": pass},
       dataType: "json",
       success: function (response) {
-
          if (response.status == "OK") {
-           window.location.replace("../../index.php");
+           //window.location.replace("../../index.php");
          } 
       }
     });

@@ -1,4 +1,4 @@
-<body>
+
   <section>
     <div id="logo">
       <img src="img/logos/logosarti.png">
@@ -14,10 +14,9 @@
           </div>
           <br>
           <br>
-          <button type="button" id="login" class="btn btn-outline-light btn-block">Connecteu</button>
+          <button type="submit" id="login" class="btn btn-outline-light btn-block">Connecteu</button>
         </form>
         <div id="resultado"></div>
       </div>
     </div>
   </section>
-</body>

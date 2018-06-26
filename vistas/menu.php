@@ -1,39 +1,44 @@
-<?php
+<?php 
 
-function showNavbar($contenido)
-{
-	$menuLateral = "";
-	$menuLogin = "";
-	/* Generar menu del usuario dependiendo de los roles que tiene asignados y que se encuentra en la variable $_SESSION['roles'] */
-	$roles = $_SESSION['roles'];
-	$menuLateral .= "<nav class=\"nav flex-column\"> ";
-	foreach ($roles as $campo) {
-			$menuLateral .= "<a id=\"".$campo[0]."\" class=\"nav-link\" href=\"#\">" . $campo[0] . "</a>";
+	function showNavbar(){
+		$menuLateral = "";
+		
+		/* Generar menu del usuario dependiendo de los roles que tiene asignados y que se encuentra en la variable $_SESSION['roles'] */
+
+		//$roles = $_SESSION['roles'];
+
+
+		/* Test */
+		$roles = array(
+          array("Home",1),
+          array("Clientes",2),
+          array("Proveedores",2),
+          array("Proyectos",2),
+          array("Encuestas",2),
+          array("Empleados",2)
+  		);
+		
+		$menuLateral .= "<div class=\"container bg-primary w-25 float-left m-0\" style=\"height:100vh\">";  
+		$menuLateral .= "<div class=\"container\">";
+		$menuLateral .= "<ul class=\"nav flex-column d-flex justify-content-center mt-5\">";
+
+
+	   	foreach ($roles as $campo) {
+	   		$menuLateral .= "<li class=\"nav-item m-3\" >";
+    		$menuLateral .= "<a class=\"nav-link btn btn-outline-light btn-large shadow\" href=\"#\" id=\"$campo[0]\">".$campo[0]."</a>";
+    		$menuLateral .= "</li>";
+	
+		}
+        	
+      
+        $menuLateral .= "</ul></div></div>";		
+
+
+		return $menuLateral;
 	}
-	$menuLateral .= "</nav>";
 
-	/* Menu Login: contiene Nombre usuario y botón Logout */
 
-	$consulta = json_decode($contenido, true);
+?>
 
-	$botones = $consulta['data'];
-	foreach ($botones as $valores) {
-			$usuario = $valores['User'];
-	}
 
-	$menuLogin .= "<nav class=\"navbar navbar-light bg-light justify-content-between\">";
-	$menuLogin .= "<a class=\"navbar-brand\">" . $usuario . "</a>";
-	$menuLogin .= "<form class=\"form-inline\">";
-	$menuLogin .= "<button class=\"btn btn-outline-success my-2 my-sm-0\" type=\"button\">Logout</button>";
-	$menuLogin .= "</form>";
-	$menuLogin .= "</nav>";
-
-	/* Crear el array asociativo */
-
-	$mensaje = array(
-			'login' => $menuLogin,
-			'menu' => $menuLateral,
-	);
-
-    return $mensaje;
-}
+ 
