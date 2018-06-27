@@ -2,6 +2,7 @@
 
 if(isset($_POST['seccio'])){
   session_start();
+  include "../model/Queries.php";
   switch ($_POST['seccio']) {
     case 'Home':
       // include "body/home.php";
@@ -14,19 +15,19 @@ if(isset($_POST['seccio'])){
       // include "body/proyectos.php";
       break;
     case 'Compras':
+    var_dump(getListCompleto('compras'));
       //include "body/compras.php";
       break;
     case 'Clientes':
+    var_dump(getListCompleto('Clientes',0));
       //include "body/clientes.php";
       break;
     case 'HHRR':
-    echo "HOLA";
+      var_dump(getListCompleto('HHRR',0));
       //include "body/users.php";
       break;
     case 'Formularios':
 
-    print_r($_SESSION['roles']);
-    echo "SON FORMS";
       //include "body/forms.php";
       break;
     case 'logout':

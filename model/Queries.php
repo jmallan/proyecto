@@ -44,13 +44,15 @@ function getList($table, $inici) {
         $datos = "La query no ha funcionado";
     }
     
+   
+
+    // Cierre base de datos.
+    mysqli_close($conexion);
+
     return json_encode([ // codifica datos para enviar de vuelta con json
            "status"  => "$status",
            "data"  => $datos               
     ]);
-
-    // Cierre base de datos.
-    mysqli_close($conexion);
 } // FIN funcion
 
 
@@ -58,7 +60,7 @@ function getList($table, $inici) {
 //                      LISTA TABLA COMPLETA (CON INNER JOINTS)
 // ***************************************************
 
-    function getListCompleto($lista, $inici) {
+    function getListCompleto($lista, $inici=0) {
 
         // Conexion servidor y conexion base de datos
         include ("Config_BD.php");
@@ -115,14 +117,14 @@ function getList($table, $inici) {
             break;
 
             case 'usuarios':           // 3 tablas de formularios
-            $sql =  "SELECT * FROM usuario
-                    INNER JOIN usuario_rol ur
-                    ON Id_usuario=ur.Fid_usuario                    
-                    INNER JOIN usuario_rol_data urd
-                    ON ur.Fid_data_rol=urd.Id_rol                    
-                    INNER JOIN usuario_navbar
-                    ON ur.Fid_navbar=Id_navbar
-                    LIMIT $inici, 10";
+                $sql =  "SELECT * FROM usuario
+                        INNER JOIN usuario_rol ur
+                        ON Id_usuario=ur.Fid_usuario                    
+                        INNER JOIN usuario_rol_data urd
+                        ON ur.Fid_data_rol=urd.Id_rol                    
+                        INNER JOIN usuario_navbar
+                        ON ur.Fid_navbar=Id_navbar
+                        LIMIT $inici, 10";
             break;
 
             default:        
