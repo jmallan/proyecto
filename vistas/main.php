@@ -1,35 +1,35 @@
-<?php 
-if(isset($_GET['logout'])){
-  session_start();
-  session_destroy();
-  header("Location: ../index.php");
-}
+<?php       
+
 if(isset($_POST['seccio'])){
-//echo $_REQUEST['login'];
+  session_start();
   switch ($_POST['seccio']) {
-    case 'home':
+    case 'Home':
       // include "body/home.php";
       break;
-    case 'ventas':
-      // include "body/ventas.php";
+    case 'Ventas':
+      echo "<p>Hola</p>";
+
       break;
-    case 'proyectos':
+    case 'Proyectos':
       // include "body/proyectos.php";
       break;
-    case 'compras':
+    case 'Compras':
       //include "body/compras.php";
       break;
-    case 'clientes':
+    case 'Clientes':
       //include "body/clientes.php";
       break;
-    case 'ctrl-usuarios':
+    case 'HHRR':
+    echo "HOLA";
       //include "body/users.php";
       break;
-    case 'forms':
+    case 'Formularios':
+
+    print_r($_SESSION['roles']);
+    echo "SON FORMS";
       //include "body/forms.php";
       break;
     case 'logout':
-      session_start();
       session_destroy();
       header("Location: ../index.php");
       break;
@@ -40,9 +40,11 @@ if(isset($_POST['seccio'])){
 }
 elseif(isset($_SESSION['user'])){
   include "body/home.php";
+  echo "hola";
 }
 else{
   include ("body/login.php");
-} 
+  echo "hola";
+  } 
 
 ?>

@@ -15,11 +15,15 @@ $(document).ready(function () {
     });
   });
 
-  $enllaços = $(".nav-link");
-  $.each($enllaços, function(index, value){
+  var link = $(".nav-link");
+  //console.log(link);//
+  $.each(link, function(index, value){
+    //console.log(value.id);
 
   	$(value).click(function (){
-	$.post("vistas/main.php", {seccio: "\""+value}+"\"", function (data, textStatus, jqXHR) {
+     var seccioMenu = value.id;
+
+	$.post("vistas/main.php", {seccio: seccioMenu }, function (data, textStatus, jqXHR) {
     $("#body").html(data);
   });
    });
