@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css?family=Shrikhand');
+
+/* CSS General ___________________________________________________________________________________________*/
+body {
+    width:100%;
+    height:100vh;
+    font-family: 'Open Sans', sans-serif;
+  }
+.bg-primary  {
+    background-color: #4f81bd!important;
+    font-size:1em;
+  }
+.border-primary{
+border: 1px solid #4f81bd!important;
+}
+.text-primary, label{
+  color:#4f81bd!important;
+}
+.btn-primary {
+  background-color: #4f81bd!important;
+}
+/* CSS  para el jumbotron _________________________________________________________________________________________________________ */
+.jumbotron {
+    width:100%;
+    padding:0;
+    padding-top: 20px; 
+  }
+#textJumbo{
+    font-family: 'Open Sans', sans-serif;
+  }
+/* CSS para menu lateral _________________________________________________________________________________________________________ */
+#navbarV{
+  height:100vh; 
+  margin-top: 5px;
+  border-radius: 0px 35px 35px 0px;
+  font-family: 'Shrikhand', cursive;
+}
+
+#navbarV a.btn-link{
+  text-decoration:none!important;
+}
+
+#navbarV ul>li>a{
+  font-size:1em!important;
+  
+}
+#navbarV a.dropdown-item:hover{
+  background-color:#007bff!important;
+}
+/* CSS para formulari proveedors ________________________________________________________________________ */
+
+.fondo{
+  background-color: rgba(79, 129, 189, 0.3);
+}
+#dir,#tel,#contact,#prov{
+
+  width: 700;
+  border: 10px;
+
+}
+#prov{
+border:1px;
+} 
+#Afegir{
+margin-left: 5px;
+border-top-left-radius: 3px;
+border-bottom-left-radius: 3px;
+}
+#newContacto{
+  float: right;
+}
+/* CSS */

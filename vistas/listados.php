@@ -1,14 +1,13 @@
 <?php 
 
 
-function showList($json){
+function showList($json, $tabla){
   //var_dump(json_decode($json,true));
   
-  $datos = json_decode($json,true);
+  $datos = json_decode($json);
   //var_dump($datos);
-  $infoDatos = $datos[0]['data'];
+  $infoDatos = $datos->data;
   //var_dump($infoDatos);
-  $tabla = "Proveedores";
 
   $listado = "<h2>Listado de $tabla</h2>";
 
@@ -23,13 +22,13 @@ function showList($json){
   $listado .= "<table>";
   switch($tabla){
     case "Compras":
-      $listado = showListCompras($infoDatos);
+      $listadoInfo = showListCompras($infoDatos);
       break;
-    case "Proyectos":
-      $listado = showListProyectos($infoDatos);
+    case "Ventas":
+      $listadoInfo = showListVentas($infoDatos);
       break;
     case "Clientes":
-      $listado = showListClientes($infoDatos);
+      $listadoInfo = showListClientes($infoDatos);
       break;
     case "Proveedores":
       //echo "Entrando en proveedores";
@@ -73,18 +72,18 @@ function showListCompras($info){
 
 }
 
-function showListProyectos($info){
+function showListVentas($info){
 
   /* Listado de proyectos */
 
   $lista = "<tr><th>Código</th><th>Empresa</th><th>Población</th><th>Fecha Alta</th></tr>" ;
 
   foreach ($info as $valores) {
-    $id = $valores['Id_cliente'];
-    $codigo = $valores['NIF'];
-    $fecha = $valores['Fechaalta'];
-    $poblacion = $valores['Poblacion'];
-    $nombre = $valores['Nombre'];
+    $id = $valores->Id_cliente;
+    $codigo = $valores->NIF;
+    $fecha = $valores->Fecha_alta;
+    $poblacion = $valores->Poblacion;
+    $nombre = $valores->Nombre;
     $lista .= "<tr id='".$id."'>";
     $lista .= "<td>$codigo</td><td>$nombre</td><td>$poblacion</td><td>$fecha</td>" ;
     $lista .= "</tr>";
@@ -159,14 +158,14 @@ function showListUsuarios($info){
 
 function buscarPermiso($rol){
 
-  //$roles = $_SESSION['roles'];
+  $roles = $_SESSION['roles'];
 
-  $roles = array(
-          array("Home",1),
-          array("Compras",1),
-          array("Clientes",2),
-          array("Proveedores",2)
-  );
+  // $roles = array(
+  //         array("Home",1),
+  //         array("Compras",1),
+  //         array("Clientes",2),
+  //         array("Proveedores",2)
+  // );
 
   foreach ($roles as $posicion) {
     if ( $posicion[0] == $rol ) {

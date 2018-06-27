@@ -21,8 +21,12 @@
 			?>
 			<div id="body">
 				<?php include "vistas/main.php";?>
+
 			</div>
 		</div>
+		<style>
+					@import "vistas/css/estils.css";
+				</style>
 	<?php }else {
 		include("vistas/body/login.php");
 	?>

@@ -3,19 +3,17 @@
 if(isset($_POST['seccio'])){
   session_start();
   include "../model/Queries.php";
+  include "listados.php";
   switch ($_POST['seccio']) {
     case 'Home':
       // include "body/home.php";
       break;
     case 'Ventas':
-      echo "<p>Hola</p>";
+      echo showList(getListCompleto('ventas',0), 'Ventas');
 
       break;
-    case 'Proyectos':
-      // include "body/proyectos.php";
-      break;
     case 'Compras':
-    var_dump(getListCompleto('compras'));
+    var_dump(getListCompleto('compras',0));
       //include "body/compras.php";
       break;
     case 'Clientes':
