@@ -24,9 +24,9 @@
 
 			</div>
 		</div>
-		<style>
+		<!-- <style>
 					@import "vistas/css/estils.css";
-				</style>
+				</style> -->
 	<?php }else {
 		include("vistas/body/login.php");
 	?>

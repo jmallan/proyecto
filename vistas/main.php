@@ -4,6 +4,9 @@ if(isset($_POST['seccio'])){
   session_start();
   include "../model/Queries.php";
   include "listados.php";
+  ?>
+    <script> </script>
+  <?php
   switch ($_POST['seccio']) {
     case 'Home':
       // include "body/home.php";
