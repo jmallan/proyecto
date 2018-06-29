@@ -56,11 +56,11 @@ function showListCompras($info){
   $lista = "<tr><th>Fecha</th><th>Num compra</th><th>Proveedor</th><th>Estado</th></tr>" ;
 
   foreach ($info as $valores) {
-    $id = $valores['Id_cliente'];
-    $codigo = $valores['NIF'];
-    $fecha = $valores['Fechaalta'];
-    $poblacion = $valores['Poblacion'];
-    $nombre = $valores['Nombre'];
+    $id = $valores->Id_proveedor;
+    $codigo = $valores->Id_proveedor;
+    $fecha = $valores->Fechaalta;
+    $poblacion = $valores->Poblacion_p;
+    $nombre = $valores->Nombre;
     $lista .= "<tr id='".$id."'>";
     $lista .= "<td>$codigo</td><td>$nombre</td><td>$poblacion</td><td>$fecha</td>" ;
     $lista .= "</tr>";
@@ -100,11 +100,10 @@ function showListClientes($info){
   $lista = "<tr><th>Código</th><th>Empresa</th><th>Población</th><th>Fecha Alta</th></tr>" ;
 
   foreach ($info as $valores) {
-    $id = $valores['Id_cliente'];
-    $codigo = $valores['NIF'];
-    $fecha = $valores['Fechaalta'];
-    $poblacion = $valores['Poblacion'];
-    $nombre = $valores['Nombre'];
+    $codigo = $valores->Id_cliente;
+    $nombre = $valores->Nombre;
+    $fecha = $valores->Fecha_alta;
+    $poblacion = $valores->Poblacion;
     $lista .= "<tr id='".$id."'>";
     $lista .= "<td>$codigo</td><td>$nombre</td><td>$poblacion</td><td>$fecha</td>" ;
     $lista .= "</tr>";
@@ -122,13 +121,12 @@ function showListProveedores($info){
  
 
   foreach ($info as $valores) {
-    $id = $valores['Id_proveedor'];
-    $codigo = $valores['NIF'];
-    $fecha = $valores['Fechaalta'];
-    $poblacion = $valores['Poblacion'];
-    $nombre = $valores['Nombre'];
+    $id = $valores->Id_proveedor;
+    $fecha = $valores->Fecha_alta;
+    $poblacion = $valores->Poblacion;
+    $nombre = $valores->Nombre;
     $lista .= "<tr id='".$id."'>";
-    $lista .= "<td>$codigo</td><td>$nombre</td><td>$poblacion</td><td>$fecha</td>" ;
+    $lista .= "<td>$id</td><td>$nombre</td><td>$poblacion</td><td>$fecha</td>" ;
     $lista .= "</tr>";
     
   }
@@ -143,11 +141,11 @@ function showListUsuarios($info){
  
 
   foreach ($info as $valores) {
-    $id = $valores['Id_usuario'];
-    $username = $valores['User'];
-    $telefono = $valores['Telefono'];
-    $apellidos = $valores['Apellidos'];
-    $nombre = $valores['Nombre'];
+    $id = $valores->Id_usuario;
+    $username = $valores->User;
+    $telefono = $valores->Telefono;
+    $apellidos = $valores->Apellidos;
+    $nombre = $valores->Nombre;
     $lista .= "<tr id='".$id."'>";
     $lista .= "<td>$username</td><td>$nombre</td><td>$apellidos</td><td>$telefono</td>" ;
     $lista .= "</tr>";
@@ -176,5 +174,4 @@ function buscarPermiso($rol){
   return $permiso;
 }
   
-
 ?>

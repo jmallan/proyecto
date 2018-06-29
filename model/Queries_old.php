@@ -226,18 +226,18 @@
             break;
 
             case 'compras': //proveedor compra factura lp albaran
-                $sql =  "SELECT * FROM proveedor AS p
-                            RIGHT JOIN proveedor_compra AS pc
-                                ON  p.Id_proveedor = pc.Fid_proveedor
-                            INNER JOIN usuario AS u
-                                ON  pc.Fid_usuario = u.Id_usuario
-                            LEFT JOIN proveedor_lineapedido as pl
-                                ON  pl.Fid_compra = pc.Id_pedido
-                            LEFT JOIN proveedor_factura AS pf
-                                ON  pl.Id_lineapedido = pf.Fid_pedido
-                            LEFT JOIN proveedor_albaran AS pa
-                                ON  pf.Id_factura = pa.Fid_factura                                
-                            WHERE  pc.Id_pedido = '$id'";
+                $sql =  "SELECT *.proveedor  FROM proveedor
+                            INNER JOIN proveedor_compra
+                                ON Id_proveedor=Fid_proveedor
+                            INNER JOIN usuario
+                                ON Fid_usuario=Id_usuario
+                            INNER JOIN proveedor_lineapedido
+                                ON Fid_compra=Id_pedido
+                            LEFT JOIN proveedor_factura
+                                ON Id_lineapedido=Fid_pedido
+                            LEFT JOIN proveedor_albaran
+                                ON Id_factura=Fid_factura
+                            WHERE  Id_compra= '$id' ";
             break;
 
             case 'usuarios':  // 3 tablas de formularios
@@ -276,9 +276,7 @@
         $consulta = mysqli_query($conexion, $sql)
             or die ("Fallo en la consulta".mysqli_error($conexion));
 
-        print_r($consulta);
-        echo "<br><br><br><br>";
-        $nfila = mysqli_num_rows($consulta);       
+        $nfila = mysqli_num_rows($consulta);        
 
         if ($consulta && $nfila>0){
             $status = "OK";                      
@@ -296,7 +294,7 @@
 
         return json_encode([ // codifica datos para enviar de vuelta con json
                "status"  => "$status",
-               "data"    => $datos
+               "data"  => $datos
         ]);
     } // FIN funcion
 
@@ -657,39 +655,6 @@
                             echo "<br><br>";    
                 break;
 
-            case 'compras':
-                $resultado1 = getFilaCompleta($consulta, $Id);
-                        echo "dentro de compras -->>";
-                        var_dump($resultado1); //var_dump : echo en json
-                        echo "<br><br><br><br>";
-               
-                $jsondata1 = json_decode($resultado1, true);    // pasamos de PHP a json
-                $data1 = $jsondata1["data"];                    // pasamos de json a PHP
-                        print_r($data1);
-                        echo "<br><br><br><br>";
-               
-                $status = "OK";
-                $otro1  = array_slice($data1[0], 0, 12);
-                $data   = array_slice($data1[0], 12, 7); 
-                $otro2  = array_slice($data1[0], 19, 8);
-                $otro3  = array_slice($data1[0], 26, 6);
-                $otro4  = array_slice($data1[0], 32, 6);
-                $otro5  = array_slice($data1[0], 38, 5);                
-
-                        print_r($data);
-                        echo "<br><br>";
-                        print_r($otro1);
-                        echo "<br><br>";
-                        print_r($otro2);
-                        echo "<br><br>";
-                        print_r($otro3);
-                        echo "<br><br>";    
-                        print_r($otro4);
-                        echo "<br><br>";
-                        print_r($otro5);
-                        echo "<br><br>";                          
-            break;
-
             default:
                 echo "Error";
                 break;
@@ -698,9 +663,9 @@
         return json_encode([
             "status"    => "$status",
             "data"      => $data,
-            "otro1"     => $otro1,
-            "otro2"     => $otro2,
-            "otro3"     => $otro3
+            "otro1"      => $otro1,
+            "otro2"      => $otro2,
+            "otro3"      => $otro3
         ]);
            
     } // FIN funcion
