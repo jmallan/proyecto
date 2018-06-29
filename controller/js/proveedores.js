@@ -5,7 +5,7 @@ $( document ).ready(function() {
 
 });
 
-/*  ------------------------------------------ Validació campos  ----------------------------------------  */
+/*  ------------------------------------------ ValidaciÃ³ campos  ----------------------------------------  */
 
 
 
@@ -19,7 +19,7 @@ function newContacto(){
 	nuevocontacto += "<input type=\"text\" class=\"form-control\" id=\"Cargo\" placeholder=\"Carreg\" name=\"Cargo\">" ;
 	nuevocontacto += "</div>";
 	nuevocontacto += "<div class=\"form-group col-md-2\">";
-	nuevocontacto += "<input type=\"email\" class=\"form-control\" id=\"Telefono\" placeholder=\"Teléfon\" name=\"Telefono\">";
+	nuevocontacto += "<input type=\"email\" class=\"form-control\" id=\"Telefono\" placeholder=\"TelÃ©fon\" name=\"Telefono\">";
 	nuevocontacto += "</div>";
 	nuevocontacto += "<div class=\"form-group col-md-4\">" ;
 	nuevocontacto +=  "<input type=\"email\" class=\"form-control\" id=\"Email\" placeholder=\"Email\" name=\"Email\">";

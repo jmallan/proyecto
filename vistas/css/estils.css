@@ -70,3 +70,9 @@ border-bottom-left-radius: 3px;
   float: right;
 }
 /* CSS */
+
+/* CSS para las taulas ___________________________________________________________________________________*/
+.thead-primary{
+  background-color:#007bff!important;
+  color:white;
+}

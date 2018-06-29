@@ -1,7 +1,7 @@
 <!-- aquest php es un include -->
 
 
-<script src="js/proveedores.js" ></script>
+<script src="../controller/js/proveedores.js" ></script>
 
 <?php 
     

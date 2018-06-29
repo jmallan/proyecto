@@ -1,7 +1,9 @@
 <?php
 include ("menu.php");
+ 
 
 $user = $_SESSION['user']->data[0]->User;
+
 $navbar = json_decode(getNavbar($user));
 $_SESSION['roles'] = array();
 

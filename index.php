@@ -1,5 +1,8 @@
 <?php
 	session_start();
+	ini_set('display_errors', 0);
+	error_reporting(-1);
+
 ?>
 <!DOCTYPE html>
 <html lang="ES-es">
@@ -17,9 +20,11 @@
 		<?php include "vistas/header.php";?>
 	</div>
 		<div class="row">
+			<div class="col-3">
 			<?php include ("vistas/navbar.php");
 			?>
-			<div id="body">
+			</div>
+			<div class="col-9" id="body">
 				<?php include "vistas/main.php";?>
 
 			</div>

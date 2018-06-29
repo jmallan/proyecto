@@ -1,6 +1,7 @@
 <!-- aquest php es un include -->
 
-<script src="js/clientes.js" ></script>
+<script src="controller/js/clientes.js" ></script>
+
 
 <?php 
     $permiso = buscarPermiso('Clientes');
@@ -27,7 +28,7 @@
       
       $nombre = $infoCliente->Nombre;
       $direccion = $infoCliente->Direccion;
-      $nif = $infocliente->NIF
+      $nif = $infocliente->NIF;
       $poblacion = $infoCliente->Poblacion;
       $provincia = $infoCliente->Provincia;
       $codigopostal = $infoCliente->Codigopostal;
@@ -225,7 +226,7 @@
 					
 			</div>
 			<div class="row mt-3 p-3">
-				<
+				
 				
 			
 				 <?php 
@@ -251,7 +252,6 @@
 			</div>
 		</form>
 	</div>
-
 
 
 

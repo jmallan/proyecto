@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "Queries.php";
+include "QueriesCall.php";
 if (isset($_REQUEST['user'])) {
     $user = $_REQUEST['user'];
     $pass = $_REQUEST['pass'];

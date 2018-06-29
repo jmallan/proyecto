@@ -18,7 +18,7 @@
   //         array("Empleados",2)
   // 		);
 		
-		$menuLateral .= "<div class=\"container bg-primary w-25 float-left m-0\" style=\"height:100vh\">";  
+		$menuLateral .= "<div class=\"container bg-primary\" id=\"navbarV\">";  
 		$menuLateral .= "<div class=\"container\">";
 		$menuLateral .= "<ul class=\"nav flex-column d-flex justify-content-center mt-5\">";
 

@@ -23,10 +23,18 @@ $(document).ready(function () {
   	$(value).click(function (){
      var seccioMenu = value.id;
 
-	$.post("vistas/main.php", {seccio: seccioMenu }, function (data, textStatus, jqXHR) {
-    $("#body").html(data);
-  });
-   });
+	   $.post("vistas/main.php", {seccio: seccioMenu }, function (data, textStatus, jqXHR) {
+        $("#body").html(data);
+     });
+    });
   })
- 
+
+
+  $("h5 > a").click(function (){
+    $.post("vistas/main.php", {seccio: "personal"}, function(data, textStatus, jqXHR){
+      console.log(data);
+      $("#body").html(data);
+    });
+  });
+
 });

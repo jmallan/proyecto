@@ -1,18 +1,16 @@
 
 
-    <script src="js/user.js"></script>
 
 <?php  
   
   /* Recoger los datos del usuario de la variable $_SESSION['user'] */
-
-  $id = $_SESSION['Id_usuario'];
-  $username = $_SESSION['User'];
-  $nombre = $_SESSION['Nombre'];
-  $apellidos = $_SESSION['Apellidos'];
-  $telefono = $_SESSION['Telefono'];
-  $email = $_SESSION['Email'];
-  $direccion = $_SESSION['Direccion'];
+  $id = $_SESSION['user']->data[0]->Id_usuario;
+  $username = $_SESSION['user']->data[0]->User;
+  $nombre = $_SESSION['user']->data[0]->Nombre;
+  $apellidos = $_SESSION['user']->data[0]->Apellidos;
+  $telefono = $_SESSION['user']->data[0]->Telefono;
+  $email = $_SESSION['user']->data[0]->Email;
+  $direccion = $_SESSION['user']->data[0]->Direccion;
 
 
 ?>    
